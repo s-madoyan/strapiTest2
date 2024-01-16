@@ -380,10 +380,11 @@ export interface ApiTodoTodo extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    Image: Attribute.Media;
+    images: Attribute.Media;
     subtitle: Attribute.String &
       Attribute.DefaultTo<'\u041F\u0440\u043E\u0433\u043D\u043E\u0437\u044B'>;
     likes: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    image: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::todo.todo', 'oneToOne', 'admin::user'> &

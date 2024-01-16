@@ -21,7 +21,7 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "Image": {
+    "images": {
       "type": "media",
       "multiple": true,
       "required": false,
@@ -39,6 +39,13 @@
     "likes": {
       "type": "biginteger",
       "default": "0"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
