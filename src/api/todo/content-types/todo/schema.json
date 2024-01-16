@@ -4,7 +4,7 @@
   "info": {
     "singularName": "todo",
     "pluralName": "todos",
-    "displayName": "Todo",
+    "displayName": "Post",
     "description": ""
   },
   "options": {
@@ -22,14 +22,23 @@
       "target": "plugin::users-permissions.user"
     },
     "Image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Прогнозы"
+    },
+    "likes": {
+      "type": "biginteger",
+      "default": "0"
     }
   }
 }

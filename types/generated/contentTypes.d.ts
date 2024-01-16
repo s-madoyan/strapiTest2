@@ -367,7 +367,7 @@ export interface ApiTodoTodo extends Schema.CollectionType {
   info: {
     singularName: 'todo';
     pluralName: 'todos';
-    displayName: 'Todo';
+    displayName: 'Post';
     description: '';
   };
   options: {
@@ -381,6 +381,9 @@ export interface ApiTodoTodo extends Schema.CollectionType {
       'plugin::users-permissions.user'
     >;
     Image: Attribute.Media;
+    subtitle: Attribute.String &
+      Attribute.DefaultTo<'\u041F\u0440\u043E\u0433\u043D\u043E\u0437\u044B'>;
+    likes: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::todo.todo', 'oneToOne', 'admin::user'> &
