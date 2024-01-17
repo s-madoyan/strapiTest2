@@ -8,18 +8,13 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string",
       "required": true
-    },
-    "user": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
     },
     "images": {
       "type": "media",
@@ -32,20 +27,31 @@
         "audios"
       ]
     },
-    "subtitle": {
-      "type": "string",
-      "default": "Прогнозы"
-    },
     "likes": {
       "type": "biginteger",
       "default": "0"
     },
-    "image": {
+    "titleImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
+      ]
+    },
+    "newspapers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::newspaper.newspaper"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "Прогнозы",
+        "Кейсы",
+        "Интервью"
       ],
-      "type": "media",
-      "multiple": false
+      "required": true
     }
   }
 }

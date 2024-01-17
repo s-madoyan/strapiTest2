@@ -362,6 +362,87 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAuthorAuthor extends Schema.CollectionType {
+  collectionName: 'authors';
+  info: {
+    singularName: 'author';
+    pluralName: 'authors';
+    displayName: 'Author';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    position: Attribute.String;
+    image: Attribute.Media & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::author.author',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::author.author',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiNewspaperNewspaper extends Schema.CollectionType {
+  collectionName: 'newspapers';
+  info: {
+    singularName: 'newspaper';
+    pluralName: 'newspapers';
+    displayName: 'Newspaper';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    value: Attribute.Text;
+    type: Attribute.Enumeration<
+      [
+        'indent',
+        'header',
+        'text',
+        'image',
+        'video',
+        'sign',
+        'numerate',
+        'list',
+        'quote'
+      ]
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'text'>;
+    authors: Attribute.Relation<
+      'api::newspaper.newspaper',
+      'oneToMany',
+      'api::author.author'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::newspaper.newspaper',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::newspaper.newspaper',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTodoTodo extends Schema.CollectionType {
   collectionName: 'todos';
   info: {
@@ -371,22 +452,29 @@ export interface ApiTodoTodo extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
     title: Attribute.String & Attribute.Required;
-    user: Attribute.Relation<
-      'api::todo.todo',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
     images: Attribute.Media;
-    subtitle: Attribute.String &
-      Attribute.DefaultTo<'\u041F\u0440\u043E\u0433\u043D\u043E\u0437\u044B'>;
     likes: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
-    image: Attribute.Media;
+    titleImage: Attribute.Media;
+    newspapers: Attribute.Relation<
+      'api::todo.todo',
+      'oneToMany',
+      'api::newspaper.newspaper'
+    >;
+    type: Attribute.Enumeration<
+      [
+        '\u041F\u0440\u043E\u0433\u043D\u043E\u0437\u044B',
+        '\u041A\u0435\u0439\u0441\u044B',
+        '\u0418\u043D\u0442\u0435\u0440\u0432\u044C\u044E'
+      ]
+    > &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::todo.todo', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::todo.todo', 'oneToOne', 'admin::user'> &
@@ -855,6 +943,8 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::author.author': ApiAuthorAuthor;
+      'api::newspaper.newspaper': ApiNewspaperNewspaper;
       'api::todo.todo': ApiTodoTodo;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
