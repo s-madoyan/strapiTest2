@@ -393,56 +393,6 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
   };
 }
 
-export interface ApiNewspaperNewspaper extends Schema.CollectionType {
-  collectionName: 'newspapers';
-  info: {
-    singularName: 'newspaper';
-    pluralName: 'newspapers';
-    displayName: 'Newspaper';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    value: Attribute.Text;
-    type: Attribute.Enumeration<
-      [
-        'indent',
-        'header',
-        'text',
-        'image',
-        'video',
-        'sign',
-        'numerate',
-        'list',
-        'quote'
-      ]
-    > &
-      Attribute.Required &
-      Attribute.DefaultTo<'text'>;
-    authors: Attribute.Relation<
-      'api::newspaper.newspaper',
-      'oneToMany',
-      'api::author.author'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::newspaper.newspaper',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::newspaper.newspaper',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiTodoTodo extends Schema.CollectionType {
   collectionName: 'todos';
   info: {
@@ -456,19 +406,27 @@ export interface ApiTodoTodo extends Schema.CollectionType {
   };
   attributes: {
     title: Attribute.String & Attribute.Required;
-    images: Attribute.Media;
     likes: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     titleImage: Attribute.Media;
-    newspapers: Attribute.Relation<
-      'api::todo.todo',
-      'oneToMany',
-      'api::newspaper.newspaper'
-    >;
     type: Attribute.Enumeration<
       [
         '\u041F\u0440\u043E\u0433\u043D\u043E\u0437\u044B',
         '\u041A\u0435\u0439\u0441\u044B',
         '\u0418\u043D\u0442\u0435\u0440\u0432\u044C\u044E'
+      ]
+    > &
+      Attribute.Required;
+    article: Attribute.DynamicZone<
+      [
+        'video.video',
+        'text.text',
+        'sign.sign',
+        'quote.quote',
+        'numerate.numerate',
+        'list.list',
+        'images.images',
+        'header.header',
+        'author.author'
       ]
     > &
       Attribute.Required;
@@ -944,7 +902,6 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::author.author': ApiAuthorAuthor;
-      'api::newspaper.newspaper': ApiNewspaperNewspaper;
       'api::todo.todo': ApiTodoTodo;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;

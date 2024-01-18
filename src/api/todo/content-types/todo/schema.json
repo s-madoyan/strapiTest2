@@ -16,17 +16,6 @@
       "type": "string",
       "required": true
     },
-    "images": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "likes": {
       "type": "biginteger",
       "default": "0"
@@ -39,17 +28,27 @@
         "images"
       ]
     },
-    "newspapers": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::newspaper.newspaper"
-    },
     "type": {
       "type": "enumeration",
       "enum": [
         "Прогнозы",
         "Кейсы",
         "Интервью"
+      ],
+      "required": true
+    },
+    "article": {
+      "type": "dynamiczone",
+      "components": [
+        "video.video",
+        "text.text",
+        "sign.sign",
+        "quote.quote",
+        "numerate.numerate",
+        "list.list",
+        "images.images",
+        "header.header",
+        "author.author"
       ],
       "required": true
     }
